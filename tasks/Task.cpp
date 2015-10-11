@@ -89,7 +89,7 @@ void Task::updateHook()
         frame_right.reset(frame_right_ptr);
         _right_frame.write(frame_right);
 	
-	if (_acquire_image.read(filename)==RTT::NewData)
+	if (_store_image_filename.read(filename)==RTT::NewData)
 	{
 	    frameHelperLeft.saveFrame(filename, *frame_left_ptr);
 	}
