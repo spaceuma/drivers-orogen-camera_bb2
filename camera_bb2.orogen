@@ -41,6 +41,10 @@ task_context "Task" do
     #*****************************
     input_port('frame_in', ro_ptr('base::samples::frame::Frame')).
         doc 'Input frame from camera firewire'
+    
+    input_port('acquire_image', '/std/string').
+        doc 'triggers the acquisition of an image and stores it into the filename given by the string'
+        
 
     #******************************
     #******* Output Ports *********
