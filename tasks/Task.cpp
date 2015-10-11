@@ -58,6 +58,7 @@ void Task::updateHook()
 
     RTT::extras::ReadOnlyPointer<base::samples::frame::Frame> input_frame;  //! Input port frames
     ::base::samples::frame::Frame left, right;
+    std::string filename;
 
     TaskBase::updateHook();
 
@@ -87,7 +88,11 @@ void Task::updateHook()
         _left_frame.write(frame_left);
         frame_right.reset(frame_right_ptr);
         _right_frame.write(frame_right);
-
+	
+	if (_acquire_image.read(filename)==RTT::NewData)
+	{
+	    frameHelperLeft.saveFrame(filename, *frame_left_ptr);
+	}
     }
 }
 
