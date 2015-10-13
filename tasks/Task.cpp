@@ -94,9 +94,28 @@ void Task::updateHook()
 	
 	if (_store_image_filename.read(filename)==RTT::NewData)
 	{
-	    frameHelperLeft.saveFrame(filename, *frame_left_ptr);
-            std::cout << "storing image in: " << filename << std::endl;
-	}
+            char file[240];
+            int acq_mode;
+            sscanf (filename.c_str(), "%s %d", file, &acq_mode);
+            if (acq_mode == 1){
+                frameHelperLeft.saveFrame(file, *frame_left_ptr);
+                std::cout << "storing image in: " << file << std::endl;
+            }
+            else if (acq_mode == 2){
+                frameHelperRight.saveFrame(file, *frame_right_ptr);
+                std::cout << "storing image in: " << file << std::endl;
+            }
+            else if (acq_mode == 3){
+                char stereoleftfile[240];
+                sprintf (stereoleftfile, "%s_left.jpg", file);
+                frameHelperLeft.saveFrame(stereoleftfile, *frame_left_ptr);
+                std::cout << "storing image in: " << stereoleftfile << std::endl;
+                char stereorightfile[240];
+                sprintf (stereorightfile, "%s_right.jpg", file);
+                frameHelperRight.saveFrame(stereorightfile, *frame_right_ptr);
+                std::cout << "storing image in: " << stereorightfile << std::endl;
+            }
+ 	}
     }
 }
 
