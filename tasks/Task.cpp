@@ -68,14 +68,17 @@ void Task::updateHook()
         left.init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth()/2.0, input_frame->getFrameMode());
         right.init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth()/2.0, input_frame->getFrameMode());
 
-        /** Interlace the images **/
-        deInterlace(*input_frame, left, right);
-
         ::base::samples::frame::Frame *frame_left_ptr = frame_left.write_access();
         ::base::samples::frame::Frame *frame_right_ptr = frame_right.write_access();
 
         frame_left_ptr->init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth()/2.0, _output_format.value());
         frame_right_ptr->init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth()/2.0, _output_format.value());
+        
+        //frame_left_ptr->init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth()/2.0, input_frame->getFrameMode());
+        //frame_right_ptr->init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth()/2.0, input_frame->getFrameMode());
+        
+        /** De-Interlace the images **/
+        deInterlace(*input_frame, left, right);
 
         /** Undistorted the images **/
         frameHelperLeft.convert(left, *frame_left_ptr, 0, 0, frame_helper::INTER_LINEAR, true);
@@ -92,6 +95,7 @@ void Task::updateHook()
 	if (_store_image_filename.read(filename)==RTT::NewData)
 	{
 	    frameHelperLeft.saveFrame(filename, *frame_left_ptr);
+            std::cout << "storing image in: " << filename << std::endl;
 	}
     }
 }
