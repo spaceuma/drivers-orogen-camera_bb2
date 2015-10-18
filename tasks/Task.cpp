@@ -65,35 +65,35 @@ void Task::updateHook()
     /** Read a new image in the port **/
     if (_frame_in.read(input_frame)==RTT::NewData)
     {
-        left.init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth()/2.0, input_frame->getFrameMode());
-        right.init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth()/2.0, input_frame->getFrameMode());
-
-        ::base::samples::frame::Frame *frame_left_ptr = frame_left.write_access();
-        ::base::samples::frame::Frame *frame_right_ptr = frame_right.write_access();
-
-        frame_left_ptr->init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth()/2.0, _output_format.value());
-        frame_right_ptr->init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth()/2.0, _output_format.value());
-        
-        //frame_left_ptr->init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth()/2.0, input_frame->getFrameMode());
-        //frame_right_ptr->init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth()/2.0, input_frame->getFrameMode());
-        
-        /** De-Interlace the images **/
-        deInterlace(*input_frame, left, right);
-
-        /** Undistorted the images **/
-        frameHelperLeft.convert(left, *frame_left_ptr, 0, 0, frame_helper::INTER_LINEAR, true);
-        frameHelperRight.convert(right, *frame_right_ptr, 0, 0, frame_helper::INTER_LINEAR, true);
-        frame_left_ptr->received_time = base::Time::now();
-        frame_right_ptr->received_time = frame_left_ptr->received_time;
-
-        /** Write the image into the output port **/
-        frame_left.reset(frame_left_ptr);
-        _left_frame.write(frame_left);
-        frame_right.reset(frame_right_ptr);
-        _right_frame.write(frame_right);
-	
-	if (_store_image_filename.read(filename)==RTT::NewData)
+ 	if (_store_image_filename.read(filename)==RTT::NewData)
 	{
+            left.init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth()/2.0, input_frame->getFrameMode());
+            right.init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth()/2.0, input_frame->getFrameMode());
+
+            ::base::samples::frame::Frame *frame_left_ptr = frame_left.write_access();
+            ::base::samples::frame::Frame *frame_right_ptr = frame_right.write_access();
+
+            frame_left_ptr->init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth()/2.0, _output_format.value());
+            frame_right_ptr->init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth()/2.0, _output_format.value());
+        
+            //frame_left_ptr->init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth()/2.0, input_frame->getFrameMode());
+            //frame_right_ptr->init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth()/2.0, input_frame->getFrameMode());
+        
+            /** De-Interlace the images **/
+            deInterlace(*input_frame, left, right);
+
+            /** Undistorted the images **/
+            frameHelperLeft.convert(left, *frame_left_ptr, 0, 0, frame_helper::INTER_LINEAR, true);
+            frameHelperRight.convert(right, *frame_right_ptr, 0, 0, frame_helper::INTER_LINEAR, true);
+            frame_left_ptr->received_time = base::Time::now();
+            frame_right_ptr->received_time = frame_left_ptr->received_time;
+
+            /** Write the image into the output port **/
+            frame_left.reset(frame_left_ptr);
+            _left_frame.write(frame_left);
+            frame_right.reset(frame_right_ptr);
+            _right_frame.write(frame_right);
+	
             char file[240];
             int acq_mode;
             sscanf (filename.c_str(), "%s %d", file, &acq_mode);
