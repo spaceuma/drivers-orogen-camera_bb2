@@ -93,7 +93,10 @@ void Task::updateHook()
             _left_frame.write(frame_left);
             frame_right.reset(frame_right_ptr);
             _right_frame.write(frame_right);
-	
+	   
+            //frameHelperLeft.convert(left, *frame_left_ptr, 0, 0, frame_helper::INTER_LINEAR, true);
+            //frameHelperRight.convert(right, *frame_right_ptr, 0, 0, frame_helper::INTER_LINEAR, true);
+ 
             char file[240];
             int acq_mode;
             sscanf (filename.c_str(), "%s %d", file, &acq_mode);
