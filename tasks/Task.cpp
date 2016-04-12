@@ -65,7 +65,7 @@ void Task::updateHook()
     {
  	if (_store_image_filename.read(filename)==RTT::NewData)
 	{
-            left.init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth(), input_frame->getFrameMode());
+            //left.init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth(), input_frame->getFrameMode());
 
             ::base::samples::frame::Frame *frame_left_ptr = frame_left.write_access();
 
@@ -74,7 +74,7 @@ void Task::updateHook()
             //frame_left_ptr->init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth()/2.0, input_frame->getFrameMode());
         
             /** Undistort the images **/
-            frameHelperLeft.convert(left, *frame_left_ptr, 0, 0, frame_helper::INTER_LINEAR, true);
+            frameHelperLeft.convert(*input_frame, *frame_left_ptr, 0, 0, frame_helper::INTER_LINEAR, true);
             frame_left_ptr->received_time = base::Time::now();
 
             /** Write the image into the output port **/
@@ -98,7 +98,7 @@ void Task::updateHook()
     {
  	if (_store_image_filename.read(filename)==RTT::NewData)
 	{
-            right.init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth(), input_frame->getFrameMode());
+            //right.init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth(), input_frame->getFrameMode());
 
             ::base::samples::frame::Frame *frame_right_ptr = frame_right.write_access();
 
@@ -107,7 +107,7 @@ void Task::updateHook()
             //frame_right_ptr->init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth()/2.0, input_frame->getFrameMode());
 
             /** Undistorted the images **/
-            frameHelperRight.convert(right, *frame_right_ptr, 0, 0, frame_helper::INTER_LINEAR, true);
+            frameHelperRight.convert(*input_frame, *frame_right_ptr, 0, 0, frame_helper::INTER_LINEAR, true);
             frame_right_ptr->received_time = base::Time::now();
 
             /** Write the image into the output port **/
@@ -174,11 +174,11 @@ void Task::updateHook()
             }
             else if (acq_mode == 3){
                 char stereoleftfile[240];
-                sprintf (stereoleftfile, "%s_left.jpg", file);
+                sprintf (stereoleftfile, "%s_left.png", file);
                 frameHelperLeft.saveFrame(stereoleftfile, *frame_left_ptr);
                 std::cout << "storing image in: " << stereoleftfile << std::endl;
                 char stereorightfile[240];
-                sprintf (stereorightfile, "%s_right.jpg", file);
+                sprintf (stereorightfile, "%s_right.png", file);
                 frameHelperRight.saveFrame(stereorightfile, *frame_right_ptr);
                 std::cout << "storing image in: " << stereorightfile << std::endl;
             }
