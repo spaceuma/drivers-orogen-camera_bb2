@@ -69,12 +69,14 @@ void Task::updateHook()
 
             ::base::samples::frame::Frame *frame_left_ptr = frame_left.write_access();
 
-            frame_left_ptr->init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth(), _output_format.value());
+            frame_left_ptr->init(*input_frame, true);
+            
+            //frame_left_ptr->init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth(), _output_format.value());
         
             //frame_left_ptr->init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth()/2.0, input_frame->getFrameMode());
         
             /** Undistort the images **/
-            frameHelperLeft.convert(*input_frame, *frame_left_ptr, 0, 0, frame_helper::INTER_LINEAR, true);
+            //frameHelperLeft.convert(*input_frame, *frame_left_ptr, 0, 0, frame_helper::INTER_LINEAR, true);
             frame_left_ptr->received_time = base::Time::now();
 
             /** Write the image into the output port **/
@@ -102,12 +104,14 @@ void Task::updateHook()
 
             ::base::samples::frame::Frame *frame_right_ptr = frame_right.write_access();
 
-            frame_right_ptr->init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth(), _output_format.value());
+            frame_right_ptr->init(*input_frame, true);
+            
+            //frame_right_ptr->init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth(), _output_format.value());
         
             //frame_right_ptr->init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth()/2.0, input_frame->getFrameMode());
 
             /** Undistorted the images **/
-            frameHelperRight.convert(*input_frame, *frame_right_ptr, 0, 0, frame_helper::INTER_LINEAR, true);
+            //frameHelperRight.convert(*input_frame, *frame_right_ptr, 0, 0, frame_helper::INTER_LINEAR, true);
             frame_right_ptr->received_time = base::Time::now();
 
             /** Write the image into the output port **/
@@ -133,22 +137,25 @@ void Task::updateHook()
 	{
             left.init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth()/2.0, input_frame->getFrameMode());
             right.init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth()/2.0, input_frame->getFrameMode());
+            
+            /** De-Interlace the images **/
+            deInterlace(*input_frame, left, right);
 
             ::base::samples::frame::Frame *frame_left_ptr = frame_left.write_access();
             ::base::samples::frame::Frame *frame_right_ptr = frame_right.write_access();
 
-            frame_left_ptr->init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth()/2.0, _output_format.value());
-            frame_right_ptr->init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth()/2.0, _output_format.value());
+            frame_left_ptr->init(left, true);
+            frame_right_ptr->init(right, true);
+
+            //frame_left_ptr->init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth()/2.0, _output_format.value());
+            //frame_right_ptr->init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth()/2.0, _output_format.value());
         
             //frame_left_ptr->init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth()/2.0, input_frame->getFrameMode());
             //frame_right_ptr->init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth()/2.0, input_frame->getFrameMode());
-        
-            /** De-Interlace the images **/
-            deInterlace(*input_frame, left, right);
-
+            
             /** Undistorted the images **/
-            frameHelperLeft.convert(left, *frame_left_ptr, 0, 0, frame_helper::INTER_LINEAR, true);
-            frameHelperRight.convert(right, *frame_right_ptr, 0, 0, frame_helper::INTER_LINEAR, true);
+            //frameHelperLeft.convert(left, *frame_left_ptr, 0, 0, frame_helper::INTER_LINEAR, true);
+            //frameHelperRight.convert(right, *frame_right_ptr, 0, 0, frame_helper::INTER_LINEAR, true);
             frame_left_ptr->received_time = base::Time::now();
             frame_right_ptr->received_time = frame_left_ptr->received_time;
 
