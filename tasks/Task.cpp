@@ -77,7 +77,7 @@ void Task::updateHook()
         
             /** Undistort the images **/
             //frameHelperLeft.convert(*input_frame, *frame_left_ptr, 0, 0, frame_helper::INTER_LINEAR, true);
-            frame_left_ptr->received_time = base::Time::now();
+            frame_left_ptr->received_time = input_frame->time;
 
             /** Write the image into the output port **/
             frame_left.reset(frame_left_ptr);
@@ -112,7 +112,7 @@ void Task::updateHook()
 
             /** Undistorted the images **/
             //frameHelperRight.convert(*input_frame, *frame_right_ptr, 0, 0, frame_helper::INTER_LINEAR, true);
-            frame_right_ptr->received_time = base::Time::now();
+            frame_right_ptr->received_time = input_frame->time;
 
             /** Write the image into the output port **/
             frame_right.reset(frame_right_ptr);
