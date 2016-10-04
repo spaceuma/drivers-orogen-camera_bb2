@@ -40,8 +40,9 @@ namespace camera_bb2 {
         /******************************************/
         /*** General Internal Storage Variables ***/
         /******************************************/
-        frame_helper::FrameHelper frameHelperLeft, frameHelperRight;   //! Used for frames conversion&undistortion
-        frame_helper::StereoCalibration stereo_calibration;            //! Calibration parameters of stereo camera
+        unsigned int index_frame;                       //! Indexing of the frames processed
+        frame_helper::FrameHelper frameHelperLeft, frameHelperRight;         //! Used for frames conversion&undistortion
+        frame_helper::StereoCalibration stereo_calibration; //! Calibration parameters of stereo camera
 
         /***************************/
         /** Output Port Variables  **/
