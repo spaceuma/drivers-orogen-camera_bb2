@@ -77,8 +77,8 @@ void Task::updateHook()
         frame_right_ptr->init(input_frame->size.width, input_frame->size.height, input_frame->getDataDepth()/2.0, _output_format.value());
 
         /** Undistorted the images **/
-        frameHelperLeft.convert(left, *frame_left_ptr, 0, 0, frame_helper::INTER_LINEAR, true);
-        frameHelperRight.convert(right, *frame_right_ptr, 0, 0, frame_helper::INTER_LINEAR, true);
+        frameHelperLeft.convert(left, *frame_left_ptr, 0, 0, frame_helper::INTER_LINEAR, _undistort.value());
+        frameHelperRight.convert(right, *frame_right_ptr, 0, 0, frame_helper::INTER_LINEAR, _undistort.value());
         frame_left_ptr->received_time = input_frame->time;
         frame_right_ptr->received_time = frame_left_ptr->received_time;
 

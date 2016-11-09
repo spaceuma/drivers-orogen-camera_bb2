@@ -36,6 +36,9 @@ task_context "Task" do
     property("output_format", "/base/samples/frame/frame_mode_t", :MODE_GRAYSCALE).
        doc "The frames coming from the input port are converted into this format before they are written to the output port. Used for De-Bayering here."
 
+    property("undistort", "bool", true).
+       doc "output the camera images undistorted/rectified"
+
     #*****************************
     #******* Input Ports *********
     #*****************************
