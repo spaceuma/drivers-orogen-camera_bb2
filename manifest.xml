@@ -2,7 +2,6 @@
   <description brief="Stereo frame processing component. Developed for the firewire stereo camera Bumblebee2 (Point Grey)">
       Read one stereo frame per updateHook in the input port (use camera_firewire component to retrieve frames from camera before),
       de-interlace and output both separate images in a single port as a FramePair type.
-      Left image is stored in FramePair.First and right image is stored in FramePair.Second
   </description>
   <author>Martin Azkarate/Martin.Azkarate@esa.int</author>
   <author>Javier Hidalgo/javier.hidalgo_carrio@dfki.de</author>
@@ -18,7 +17,7 @@
   <depend package="dummy-dependency-n" />
   -->
   <depend package="drivers/orogen/camera_firewire" />
-  <depend package="image_processing/frame_helper" />
+  <depend package="perception/frame_helper" />
 
   <tags>stable</tags>
 </package>
