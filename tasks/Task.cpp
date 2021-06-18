@@ -43,6 +43,38 @@ bool Task::configureHook()
 
     index_frame=0;
 
+    udp_config = _udp_config.get();        
+
+    if (udp_config)
+    {
+        // Ports to receive data from Vortex (server and client)
+        bb2_port_c_r = _bb2_port_c_r.get();
+
+        bb2_port_c_l = _bb2_port_c_l.get();
+
+        // Load addresses
+        addr_c = _addr_c.get();
+        
+        if (!create_socks)
+        {
+            // Creating UDP object for the right frame
+            udp_bb2_r = new udp::UDP();
+
+            // Creating UDP object for the left frame
+            udp_bb2_l = new udp::UDP();
+
+            // Creating socks to receive data from Vortex (server and client)
+            bb2_sock_client = udp_bb2->createSocket();
+
+            // Bind & connect sockets with addresses to receive data from Vortex
+            udp_bb2_r->connectSocket(bb2_sock_client, addr_c, bb2_port_c_r);
+
+            udp_bb2_l->connectSocket(bb2_sock_client, addr_c, bb2_port_c_l);
+
+            create_socks = true;
+
+        }
+    }
     return true;
 }
 
@@ -87,7 +119,14 @@ void Task::updateHook()
         _left_frame.write(frame_left);
         frame_right.reset(frame_right_ptr);
         _right_frame.write(frame_right);
-
+    
+        //TODO output UDP with left and right frames
+        n_bb2_send_left = udp_bb2_l->udpSendStruct(bb2_sock_client,
+                                           frame_left,
+                                           1);
+        n_bb2_send_right = udp_bb2_r->udpSendStruct(bb2_sock_client,
+                                           frame_right,
+                                           1);
     }
 }
 

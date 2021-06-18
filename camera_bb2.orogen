@@ -2,6 +2,8 @@ name "camera_bb2"
 # Optionally declare the version number
 # version "0.1"
 using_library "frame_helper"
+using_library "udp"
+
 # If new data types need to be defined, they have to be put in a separate C++
 # header, and this header will be loaded here
 # Finally, it is pretty common that headers are directly loaded from an external
@@ -38,6 +40,14 @@ task_context "Task" do
 
     property("undistort", "bool", true).
        doc "output the camera images undistorted/rectified"
+
+    property ('bb2_port_c_r', 'int', 0).
+
+    property ('bb2_port_c_l', 'int', 0).
+
+    property ('addr_c', '/std/string', 'none').
+
+    property ('udp_config', 'bool', false).
 
     #*****************************
     #******* Input Ports *********

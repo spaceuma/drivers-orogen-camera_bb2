@@ -5,6 +5,7 @@
 
 #include <base/Time.hpp>
 
+#include "../../../udp/src/udp.hpp"
 #include "camera_bb2/TaskBase.hpp"
 #include "frame_helper/FrameHelper.h"
 
@@ -49,6 +50,28 @@ namespace camera_bb2 {
         /***************************/
         RTT::extras::ReadOnlyPointer<base::samples::frame::Frame> frame_left;   //! De-interlaced left frame
         RTT::extras::ReadOnlyPointer<base::samples::frame::Frame> frame_right;  //! De-interlaced right frame
+
+    bool create_socks = false;
+
+    int n_bb2_send_left;
+
+    int n_bb2_send_right;
+
+    // Creating UDP object
+    udp::UDP *udp_bb2_r;
+
+    udp::UDP *udp_bb2_l;
+
+    // Creating socks to receive data from Vortex
+    int bb2_sock_client;
+
+    bool udp_config;    
+    
+    int bb2_port_c_l;
+
+    int bb2_port_c_r;
+
+    std::string addr_c;
 
     public:
         /** TaskContext constructor for Task
