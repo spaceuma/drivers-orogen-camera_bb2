@@ -124,11 +124,11 @@ void Task::updateHook()
     
         //TODO output UDP with left and right frames
         n_bb2_send_left = udp_bb2_l->udpSendFrame(bb2_sock_client_l,
-                                           frame_left.get(),
+                                           &frame_left.get()->image,
                                            1000);
 
         n_bb2_send_right = udp_bb2_r->udpSendFrame(bb2_sock_client_r,
-                                           frame_right.get(),
+                                           &frame_right.get()->image,
                                            1000);
     }
 }
