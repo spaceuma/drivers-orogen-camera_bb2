@@ -63,7 +63,9 @@ namespace camera_bb2 {
     udp::UDP *udp_bb2_l;
 
     // Creating socks to receive data from Vortex
-    int bb2_sock_client;
+    int bb2_sock_client_r;
+
+    int bb2_sock_client_l;
 
     bool udp_config;    
     
@@ -72,6 +74,10 @@ namespace camera_bb2 {
     int bb2_port_c_r;
 
     std::string addr_c;
+
+    base::samples::frame::Frame *udp_frame_right;
+
+    base::samples::frame::Frame *udp_frame_left;
 
     public:
         /** TaskContext constructor for Task

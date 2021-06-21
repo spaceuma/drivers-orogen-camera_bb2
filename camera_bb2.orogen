@@ -41,13 +41,13 @@ task_context "Task" do
     property("undistort", "bool", true).
        doc "output the camera images undistorted/rectified"
 
-    property ('bb2_port_c_r', 'int', 0).
+    property('bb2_port_c_r', 'int', 10)
 
-    property ('bb2_port_c_l', 'int', 0).
+    property('bb2_port_c_l', 'int', 10)
 
-    property ('addr_c', '/std/string', 'none').
+    property('addr_c', '/std/string')
 
-    property ('udp_config', 'bool', false).
+    property('udp_config', 'bool', false)
 
     #*****************************
     #******* Input Ports *********
