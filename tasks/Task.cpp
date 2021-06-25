@@ -121,15 +121,32 @@ void Task::updateHook()
         _left_frame.write(frame_left);
         frame_right.reset(frame_right_ptr);
         _right_frame.write(frame_right);
-    
+
+        std::vector<uint8_t> aux_l;
+        std::vector<uint8_t> aux_r;
+
+        int data_size;
+
+        data_size = 49152;
+
+        aux_l.resize(data_size);
+        aux_r.resize(data_size);
+
+       for (int i=0; i<data_size; i++)
+
+          aux_l[i]=frame_left.get()->image[i];
+
+       for (int i=0; i<data_size; i++)
+          aux_r[i]=frame_right.get()->image[i];
+
         //TODO output UDP with left and right frames
         n_bb2_send_left = udp_bb2_l->udpSendFrame(bb2_sock_client_l,
-                                           &frame_left.get()->image,
-                                           1000);
+                                           &aux_l,
+                                           data_size);
 
         n_bb2_send_right = udp_bb2_r->udpSendFrame(bb2_sock_client_r,
-                                           &frame_right.get()->image,
-                                           1000);
+                                           &aux_r,
+                                           data_size);
     }
 }
 
