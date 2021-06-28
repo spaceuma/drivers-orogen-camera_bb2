@@ -160,15 +160,15 @@ void Task::updateHook()
 
         if (navcam)
         {
-            udp_bb2_l->saveVector_uint8(&frame_left.get()->image, "/var/www/exoter.com/public_html/camerabb2_navcam_left");
+            udp_bb2_l->saveVector_uint8(&frame_left.get()->image, "/var/www/exoter.com/public_html/camerabb2_navcam_left.txt");
 
-            udp_bb2_r->saveVector_uint8(&frame_right.get()->image, "/var/www/exoter.com/public_html/camerabb2_navcam_right");
+            udp_bb2_r->saveVector_uint8(&frame_right.get()->image, "/var/www/exoter.com/public_html/camerabb2_navcam_right.txt");
         }
         if (loccam)
         {
-            udp_bb2_l->saveVector_uint8(&frame_left.get()->image, "/var/www/exoter.com/public_html/camerabb2_loccam_left");
+            udp_bb2_l->saveVector_uint8(&frame_left.get()->image, "/var/www/exoter.com/public_html/camerabb2_loccam_left.txt");
 
-            udp_bb2_r->saveVector_uint8(&frame_right.get()->image,"/var/www/exoter.com/public_html/camerabb2_loccam_right");
+            udp_bb2_r->saveVector_uint8(&frame_right.get()->image,"/var/www/exoter.com/public_html/camerabb2_loccam_right.txt");
         }
     }
 }
