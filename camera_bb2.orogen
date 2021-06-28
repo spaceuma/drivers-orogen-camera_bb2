@@ -49,6 +49,10 @@ task_context "Task" do
 
     property('udp_config', 'bool', false)
 
+    property('navcam', 'bool', false)
+
+    property('loccam', 'bool', false)
+
     #*****************************
     #******* Input Ports *********
     #*****************************

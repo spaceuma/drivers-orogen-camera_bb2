@@ -45,6 +45,10 @@ bool Task::configureHook()
 
     udp_config = _udp_config.get();        
 
+    navcam = _navcam.get();
+
+    loccam = _loccam.get();
+
     if (udp_config)
     {
         // Ports to receive data from Vortex (server and client)
@@ -122,6 +126,11 @@ void Task::updateHook()
         frame_right.reset(frame_right_ptr);
         _right_frame.write(frame_right);
 
+
+
+       /* if (udp_config)
+        {
+
         std::vector<uint8_t> aux_l;
         std::vector<uint8_t> aux_r;
 
@@ -147,6 +156,20 @@ void Task::updateHook()
         n_bb2_send_right = udp_bb2_r->udpSendFrame(bb2_sock_client_r,
                                            &aux_r,
                                            data_size);
+        }*/
+
+        if (navcam)
+        {
+            udp_bb2_l->saveVector_uint8(&frame_left.get()->image, "/var/www/exoter.com/public_html/camerabb2_navcam_left");
+
+            udp_bb2_r->saveVector_uint8(&frame_right.get()->image, "/var/www/exoter.com/public_html/camerabb2_navcam_right");
+        }
+        if (loccam)
+        {
+            udp_bb2_l->saveVector_uint8(&frame_left.get()->image, "/var/www/exoter.com/public_html/camerabb2_loccam_left");
+
+            udp_bb2_r->saveVector_uint8(&frame_right.get()->image,"/var/www/exoter.com/public_html/camerabb2_loccam_right");
+        }
     }
 }
 

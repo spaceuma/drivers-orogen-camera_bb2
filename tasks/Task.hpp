@@ -52,11 +52,11 @@ namespace camera_bb2 {
         RTT::extras::ReadOnlyPointer<base::samples::frame::Frame> frame_right;  //! De-interlaced right frame
 
     bool create_socks = false;
-
+/*
     int n_bb2_send_left;
 
     int n_bb2_send_right;
-
+*/
     // Creating UDP object
     udp::UDP *udp_bb2_r;
 
@@ -68,7 +68,11 @@ namespace camera_bb2 {
     int bb2_sock_client_l;
 
     bool udp_config;    
-    
+   
+    bool navcam;
+
+    bool loccam;
+
     int bb2_port_c_l;
 
     int bb2_port_c_r;
